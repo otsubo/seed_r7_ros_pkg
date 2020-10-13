@@ -85,6 +85,8 @@ add_definitions(-std=c++11)  # should be c++14 for melodic
 
 # Library
 add_library(seed_r7_hand_controllers src/seed_r7_hand_controller.cpp)
+# add_library(${PROJECT_NAME}
+#   src/seed_controller_manager.cpp)
 add_dependencies(seed_r7_hand_controllers ${catkin_EXPORTED_TARGETS} ${PROJECT_NAME}_generate_messages_cpp)
 target_link_libraries(seed_r7_hand_controllers ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 
@@ -96,6 +98,7 @@ add_executable(${PROJECT_NAME} src/seed_r7_ros_controller.cpp
                                src/seed_r7_upper_controller.cpp
                                src/seed_r7_lower_controller.cpp
                                src/stroke_converter_base.cpp
+                               src/seed_controller_manager.cpp
                                )
 target_link_libraries(${PROJECT_NAME} seed_r7_hand_controllers
                                       ${catkin_LIBRARIES} ${Boost_LIBRARIES})
@@ -108,6 +111,16 @@ install(TARGETS ${PROJECT_NAME} seed_r7_hand_controllers
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
-install(DIRECTORY include/${PROJECT_NAME}/
-  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
-)
+# install(DIRECTORY include/${PROJECT_NAME}/
+#   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+# )
+
+# install(DIRECTORY include/${PROJECT_NAME}/
+#   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION})
+
+# install(TARGETS ${PROJECT_NAME}
+#   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION})
+
+install(PROGRAMS scripts/spawner scripts/unspawner scripts/controller_manager
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
